@@ -1,0 +1,17 @@
+# Arxius amb credencials sensibles
+conexio.php
+
+# Arxius del sistema
+.DS_Store
+Thumbs.db
+
+# Arxius de logs
+*.log
+
+# Arxius temporals
+*.tmp
+*.temp
+
+# Arxius de còpia de seguretat
+*.bak
+*.backup
