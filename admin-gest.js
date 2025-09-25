@@ -26,7 +26,7 @@ function mostrarVistaLista(data) {
   contenidor.innerHTML = html;
 }
 
-function mostrarVistaCrear(data) {
+function mostrarVistaCrear() {
     ocultarTodasLasVistas();
     document.getElementById('crear-pregunta').classList.remove('hidden');
     
@@ -76,8 +76,8 @@ contenidor.addEventListener('click', function(e) {
 }
 
     
-    if(e.target.classList.contains('btn-guardar')){
-        guardarPregunta();
+    if(e.target.classList.contains('btn-crear')){
+        mostrarVistaCrear();
     }
     
     if(e.target.classList.contains('btn-cancelar')){

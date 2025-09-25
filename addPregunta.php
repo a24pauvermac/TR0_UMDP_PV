@@ -8,7 +8,7 @@ $nombre = $input['nombre'] ?? '';
 $url = $input['url'] ?? '';
 
 if ($nombre && $url) {
-    $sql = "INSERT INTO paises (nombre, url) VALUES (?, ?)";
+    $sql = "INSERT INTO paises (nombre, `url`) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('ss', $nombre, $url);
     $stmt->execute();
