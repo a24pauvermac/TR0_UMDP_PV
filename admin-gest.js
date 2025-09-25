@@ -29,8 +29,31 @@ function mostrarVistaLista(data) {
 function mostrarVistaCrear(data) {
     ocultarTodasLasVistas();
     document.getElementById('crear-pregunta').classList.remove('hidden');
+    
+    let html= ""; 
+    html += `<input type="text" id="nombrePais" placeholder="Nom del país">`;
+    html += `<input type="text" id="urlBandera" placeholder="URL de la bandera">`;
+    html += `<button id="btnEnviar">Guardar pregunta</button>`;
+    
+    document.getElementById('crear-pregunta').innerHTML = html;
+    
+    document.getElementById('btnEnviar').addEventListener('click', function() {
+      let nombre = document.getElementById('nombrePais').value;
+      let url = document.getElementById('urlBandera').value;
+      let dades = { nombre, url };
 
+      fetch('addPregunta.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(dades)
+      })
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+      });
+    });
 }
+
 
 function ocultarTodasLasVistas() {
     let contenedores = document.querySelectorAll('.container');
