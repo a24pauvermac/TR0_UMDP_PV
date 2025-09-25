@@ -69,10 +69,13 @@ contenidor.addEventListener('click', function(e) {
 
     if(e.target.classList.contains('btn-lista')){
     
-      fetch('getPreguntas.php?num=20') 
-    .then(response => response.json())
-    .then(data => mostrarVistaLista(data));
-    }
+    fetch('getPreguntas.php?num=20') 
+  .then(response => response.json())
+  .then(data => {
+    console.log("Dades rebudes del servidor:", data);
+    mostrarVistaLista(data);
+  });
+
     
     if(e.target.classList.contains('btn-guardar')){
         guardarPregunta();
@@ -83,4 +86,5 @@ contenidor.addEventListener('click', function(e) {
   
     }
     }
+  }
 });
