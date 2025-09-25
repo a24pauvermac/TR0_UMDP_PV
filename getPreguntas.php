@@ -1,6 +1,5 @@
 <?php
 require "conexio.php";
-session_start();
 header('Content-Type: application/json');
 
 $num = isset($_GET['num']) ? intval($_GET['num']) : 10;

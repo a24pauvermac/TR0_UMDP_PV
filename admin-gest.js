@@ -63,6 +63,7 @@ function ocultarTodasLasVistas() {
     });
 }
 
+let contenidor = document.getElementById('admin-container');
 contenidor.addEventListener('click', function(e) {
     if(e.target.classList.contains('btn')){
 
