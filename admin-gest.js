@@ -66,8 +66,11 @@ function ocultarTodasLasVistas() {
 contenidor.addEventListener('click', function(e) {
     if(e.target.classList.contains('btn')){
 
-    if(e.target.classList.contains('btn-crear')){
-        mostrarVistaCrear();
+    if(e.target.classList.contains('btn-lista')){
+    
+      fetch('getPreguntas.php?num=20') 
+    .then(response => response.json())
+    .then(data => mostrarVistaLista(data));
     }
     
     if(e.target.classList.contains('btn-guardar')){
@@ -75,10 +78,8 @@ contenidor.addEventListener('click', function(e) {
     }
     
     if(e.target.classList.contains('btn-cancelar')){
-        mostrarVistaLista();
-    fetch('getPreguntas.php?num=10') 
-    .then(response => response.json())
-    .then(data => mostrarVistaLista(data));
+      
+  
     }
     }
 });
