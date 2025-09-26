@@ -1,4 +1,3 @@
-
 function mostrarVistaLista(data) {
   ocultarTodasLasVistas();
   let contenidor = document.getElementById('lista-preguntas');
@@ -20,6 +19,8 @@ function mostrarVistaLista(data) {
       html += `<p>${resposta.nombre}</p>`;
     });
 
+    html += `<button class="btn-eliminar" data-id="${pregunta.idPregunta}">Eliminar</button>`;
+    html += `<button class="btn-editar" data-id="${pregunta.idPregunta}" data-nombre="${respostaCorrecta.nombre}" data-url="${respostaCorrecta.url}">Editar</button>`;
     html += `</div>`;
   });
 
@@ -54,13 +55,67 @@ function mostrarVistaCrear() {
     });
 }
 
+function mostrarVistaEditar(idPregunta, nombre, url) {
+    ocultarTodasLasVistas();
+    document.getElementById('crear-pregunta').classList.remove('hidden');
+    
+    let html= ""; 
+    html += `<input type="text" id="nombrePais" placeholder="Nom del país" value="${nombre}">`;
+    html += `<input type="text" id="urlBandera" placeholder="URL de la bandera" value="${url}">`;
+    html += `<button id="btnActualizar" data-id="${idPregunta}">Actualitzar pregunta</button>`;
+    html += `<button id="btnCancelar">Cancelar</button>`;
+    
+    document.getElementById('crear-pregunta').innerHTML = html;
+    
+    document.getElementById('btnActualizar').addEventListener('click', function() {
+      let nombre = document.getElementById('nombrePais').value;
+      let url = document.getElementById('urlBandera').value;
+      let dades = { idPregunta, nombre, url };
+
+      fetch('updatePregunta.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(dades)
+      })
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+      });
+    });
+    
+    document.getElementById('btnCancelar').addEventListener('click', function() {
+      mostrarVistaCrear();
+    });
+}
+
+function eliminarPregunta(idPregunta) {
+    if (confirm('Estàs segur que vols eliminar aquesta pregunta?')) {
+        let dades = { idPregunta };
+
+        fetch('deletePregunta.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(dades)
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            console.log(data);
+            // Recarregar la llista de preguntes
+            fetch('getPreguntas.php?num=20')
+                .then(response => response.json())
+                .then(data => {
+                    mostrarVistaLista(data);
+                });
+        });
+    }
+}
 
 function ocultarTodasLasVistas() {
-    let contenedores = document.querySelectorAll('.container');
+    let listaPreguntas = document.getElementById('lista-preguntas');
+    let crearPregunta = document.getElementById('crear-pregunta');
     
-    contenedores.forEach(contenedor => {
-        contenedor.classList.add('hidden');
-    });
+    if (listaPreguntas) listaPreguntas.classList.add('hidden');
+    if (crearPregunta) crearPregunta.classList.add('hidden');
 }
 
 let contenidor = document.getElementById('admin-container');
@@ -80,9 +135,16 @@ contenidor.addEventListener('click', function(e) {
         mostrarVistaCrear();
     }
     
-    if(e.target.classList.contains('btn-cancelar')){
-      
-  
+    if(e.target.classList.contains('btn-eliminar')){
+        let idPregunta = e.target.getAttribute('data-id');
+        eliminarPregunta(idPregunta);
+    }
+    
+    if(e.target.classList.contains('btn-editar')){
+        let idPregunta = e.target.getAttribute('data-id');
+        let nombre = e.target.getAttribute('data-nombre');
+        let url = e.target.getAttribute('data-url');
+        mostrarVistaEditar(idPregunta, nombre, url);
     }
     }
   
