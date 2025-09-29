@@ -1,15 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ca">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Quiz de Banderes</title>
     <script src="script.js" ></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="questionari"></div>
-    <div id="marcador"></div>
-    <a href="admin.html">Admin panel</a>
+    <div id="formulario-usuario">
+        <h2>Introdueix el teu nom:</h2>
+        <input type="text" id="nomUsuari" placeholder="El teu nom">
+        <button onclick="guardarNom()">Començar Joc</button>
+    </div>
+    
+    <div id="joc" style="display:none">
+        <h1>Quiz de Banderes dels Països</h1>
+        <div id="questionari"></div>
+        <div id="marcador"></div>
+        <a href="admin.html">Panel d'Administració</a>
+        <button onclick="esborrarNom()">Esborrar nom</button>
+    </div>
 </body>
 </html>
