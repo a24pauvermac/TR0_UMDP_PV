@@ -275,6 +275,9 @@ function actualitzarTemps() {
     `background-color: ${percentatgeTemps > 20 ? '#4CAF50' : '#f44336'}`);
   
   marcador.innerHTML = nouHtml;
+  // Reconfigurar el botó Enviar després d'assignar innerHTML perquè
+  // l'element s'ha recreat i hem perdut els listeners anteriors.
+  configurarBotoEnviar();
 }
 
 function tornarComençar() {
