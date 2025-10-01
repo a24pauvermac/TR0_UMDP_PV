@@ -11,19 +11,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="texto-fondo">UMDP</div>
-    <div id="formulario-usuario">
-        <h2>Introdueix el teu nom:</h2>
-        <input type="text" id="nomUsuari" placeholder="El teu nom">
-        <button id="btnComençar">Començar Joc</button>
-    </div>
-    
-    <div id="joc" style="display:none">
-        <h1 id="saludoUsuario">Quiz de Banderes dels Països</h1>
-        <div id="questionari"></div>
-        <div id="marcador"></div>
-        <a href="admin.html">Panel d'Administració</a>
-        <button id="btnEsborrar">Esborrar nom</button>
+    <div id="texto-fondo-inicial">UMDP</div>
+    <div class="botones-container">
+        <p>Adivina les banderes!</p>
+        <div class="botones-fila">
+            <button id="btnComençarLanding" onclick="window.location.href='index.html'">Començar Joc</button>
+            <button id="btnAdminLanding">Panel Administració</button>
+        </div>
     </div>
     
 </body>

@@ -1,29 +1,529 @@
+/* Reset y configuración base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 20px;
+    font-family: 'Onest', sans-serif;
+    background-image: url('css img/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+}
+
+/* Texto de fondo UMPD - Landing (color actual) */
+#texto-fondo-inicial {
+    position: fixed;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20rem;
+    font-weight: 900;
+    color: #ffffffc9;
+    z-index: -1;
+    pointer-events: none;
+    font-family: 'Onest', sans-serif;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Texto de fondo UMPD - Index (animación única de fuerte a transparente) */
+#texto-fondo {
+    position: fixed;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20rem;
+    font-weight: 900;
+    color: #ffffffc9;
+    z-index: -1;
+    pointer-events: none;
+    font-family: 'Onest', sans-serif;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    animation: fade-out 0.8s ease-out forwards;
+}
+
+/* Animación única de fuerte a transparente */
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+        color: #ffffffc9;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+    100% {
+        color: #ffffff73;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+    }
+}
+
+/* Contenedor principal con efecto glassmorphism */
+#formulario-usuario, #joc {
+    background: rgba(255, 255, 255, 0.136);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    max-width: 500px;
+    width: 100%;
     text-align: center;
+    position: relative;
+    z-index: 10;
 }
 
+/* Títulos */
+h1, h2 {
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+/* Input de texto */
+#nomUsuari {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: 'Onest', sans-serif;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    color: #ffffff;
+}
+
+#nomUsuari:focus {
+    outline: none;
+    border-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#nomUsuari::placeholder {
+    color: #ffffff;
+    opacity: 0.7;
+}
+
+/* Botón principal con efecto glass */
+#btnComençar {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: 'Onest', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-bottom: 15px;
+    box-shadow: 0 8px 32px rgba(189, 189, 189, 0.1);
+}
+
+/* Botón esborrar con efecto glass */
+#btnEsborrar {
+    background: rgba(231, 76, 60, 0.2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #ffffff;
+    border: 1px solid rgba(231, 76, 60, 0.4);
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: 'Onest', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-bottom: 15px;
+    box-shadow: 0 8px 32px rgba(189, 189, 189, 0.1);
+}
+
+#btnComençar:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(175, 175, 175, 0.15);
+}
+
+#btnEsborrar:hover {
+    background: rgba(231, 76, 60, 0.3);
+    border-color: rgba(231, 76, 60, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(231, 76, 60, 0.2);
+}
+
+
+
+/* Enlace de administración */
+a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin: 10px 0;
+}
+
+a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+/* Elementos del juego */
+#questionari {
+    margin: 30px 0;
+}
+
+#marcador {
+    background: rgba(46, 204, 113, 0.2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(46, 204, 113, 0.4);
+    border-radius: 12px;
+    padding: 15px;
+    margin: 20px 0;
+    font-weight: 600;
+    color: #ffffff;
+    box-shadow: 0 8px 32px rgba(189, 189, 189, 0.1);
+}
+
+/* Imágenes de banderas */
 img {
-   width: 200px;
+    width: 200px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin: 15px 0;
+    transition: transform 0.3s ease;
 }
 
+img:hover {
+    transform: scale(1.05);
+}
+
+/* Botones de respuesta */
+.btn-resposta {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Onest', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(189, 189, 189, 0.1);
+}
+
+.btn-resposta:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(175, 175, 175, 0.15);
+}
+
+/* Estado seleccionado */
+.seleccionada {
+    background: rgba(255, 193, 7, 0.3) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #ffffff !important;
+    border-color: rgba(255, 193, 7, 0.6) !important;
+    box-shadow: 0 10px 25px rgba(255, 193, 7, 0.2) !important;
+}
+
+/* Clase para ocultar elementos */
 .hidden {
     display: none;
 }
 
-.seleccionada {
-  background-color: orange;
+/* Responsive */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    #formulario-usuario, #joc {
+        padding: 30px 20px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.2rem;
+    }
+    
+    img {
+        width: 150px;
+    }
+    
+    .botones-fila {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    p {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+    }
+    
+    #btnComençarLanding, 
+    #btnAdminLanding {
+        font-size: 16px;
+        height: 55px;
+    }
 }
 
-.btn-resposta {
-  margin: 10px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+/* Título de landing */
+p {
+    color: white;
+    font-family: 'Onest', sans-serif;
+    font-size: 2rem;
+    font-weight: 100;
+    text-align: center;
+    margin-bottom: 40px;
+    text-shadow: 0 2px 10px rgba(252, 251, 251, 0.3);
+}
+
+/* Contenedor de botones para landing */
+.botones-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Contenedor de botones en fila */
+.botones-fila {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+}
+
+/* Botones de landing con IDs únicos */
+#btnComençarLanding, 
+#btnAdminLanding {
+    background: rgba(255, 255, 255, 0.101);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-family: 'Onest', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 250px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    margin: 0;
+    text-align: center;
+}
+
+#btnComençarLanding:hover, 
+#btnAdminLanding:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+#btnComençarLanding:active, 
+#btnAdminLanding:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Animaciones suaves */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#formulario-usuario, #joc, .botones-container {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Estilos para página de administración */
+#texto-fondo-admin {
+    position: fixed;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20rem;
+    font-weight: 900;
+    color: #ffffffc9;
+    z-index: -1;
+    pointer-events: none;
+    font-family: 'Onest', sans-serif;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+#admin-container {
+    background: rgba(255, 255, 255, 0.136);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    max-width: 800px;
+    width: 100%;
+    margin: 50px auto;
+    position: relative;
+    z-index: 10;
+    animation: fadeIn 0.6s ease-out;
+}
+
+#lista-preguntas, #crear-pregunta {
+    margin: 20px 0;
+}
+
+.btn-lista, .btn-crear {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: 'Onest', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(189, 189, 189, 0.1);
+    width: 100%;
+    margin: 10px 0;
+}
+
+.btn-lista:hover, .btn-crear:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(175, 175, 175, 0.15);
+}
+
+/* Estilos para elementos dinámicos del admin */
+.container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Estilos para formularios en admin */
+input, textarea, select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Onest', sans-serif;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    color: #ffffff;
+    margin: 8px 0;
+    transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+input::placeholder, textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Botones específicos del admin */
+.btn-admin {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Onest', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 5px;
+}
+
+.btn-admin:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+.btn-admin.danger {
+    background: rgba(231, 76, 60, 0.2);
+    border-color: rgba(231, 76, 60, 0.4);
+}
+
+.btn-admin.danger:hover {
+    background: rgba(231, 76, 60, 0.3);
+    border-color: rgba(231, 76, 60, 0.6);
+}
+
+.btn-admin.success {
+    background: rgba(46, 204, 113, 0.2);
+    border-color: rgba(46, 204, 113, 0.4);
+}
+
+.btn-admin.success:hover {
+    background: rgba(46, 204, 113, 0.3);
+    border-color: rgba(46, 204, 113, 0.6);
 }
