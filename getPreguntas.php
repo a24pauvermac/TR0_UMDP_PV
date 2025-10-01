@@ -54,9 +54,7 @@ foreach ($preguntes_seleccionades as $pregunta) {
     ];
 }
 
-$_SESSION['preguntes'] = $pregSenseIndex;
-$_SESSION['puntuacio'] = 0;
-$_SESSION['pregunta_actual'] = 0;
+// Variables de sessió eliminades - no es necessiten
 
 echo json_encode(['preguntes' => $pregSenseIndex]);
 

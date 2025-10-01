@@ -7,7 +7,7 @@ $input = json_decode($inputJSON, TRUE);
 $idPregunta = $input['idPregunta'] ?? '';
 
 if ($idPregunta) {
-    // Primero obtenemos el idRespuestaCorrecta para eliminar también el país
+    // Primer obtenim el idRespuestaCorrecta per eliminar també el país
     $sql = "SELECT idRespuestaCorrecta FROM questions WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('i', $idPregunta);
@@ -17,28 +17,28 @@ if ($idPregunta) {
     if ($row = $result->fetch_assoc()) {
         $idPais = $row['idRespuestaCorrecta'];
         
-        // Eliminamos la pregunta
+        // Eliminem la pregunta
         $sqlDelete = "DELETE FROM questions WHERE id = ?";
         $stmtDelete = $conn->prepare($sqlDelete);
         $stmtDelete->bind_param('i', $idPregunta);
         $stmtDelete->execute();
         $stmtDelete->close();
         
-        // Eliminamos el país asociado
+        // Eliminem el país associat
         $sqlDeletePais = "DELETE FROM paises WHERE id = ?";
         $stmtDeletePais = $conn->prepare($sqlDeletePais);
         $stmtDeletePais->bind_param('i', $idPais);
         $stmtDeletePais->execute();
         $stmtDeletePais->close();
         
-        echo json_encode(['success' => true, 'message' => 'Pregunta eliminada correctamente']);
+        echo json_encode(['exit' => true, 'missatge' => 'Pregunta eliminada correctament']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Pregunta no encontrada']);
+        echo json_encode(['exit' => false, 'missatge' => 'Pregunta no trobada']);
     }
     
     $stmt->close();
 } else {
-    echo json_encode(['success' => false, 'message' => 'ID de pregunta requerido']);
+    echo json_encode(['exit' => false, 'missatge' => 'ID de pregunta requerit']);
 }
 
 $conn->close();

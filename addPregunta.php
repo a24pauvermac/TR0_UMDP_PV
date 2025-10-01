@@ -1,26 +1,69 @@
 <?php
 include 'conexio.php';
 
-$inputJSON = file_get_contents('php://input');
-$input = json_decode($inputJSON, TRUE);
+// Rebre el nom del país
+$nom = $_POST['nombre'] ?? '';
 
-$nombre = $input['nombre'] ?? '';
-$url = $input['url'] ?? '';
+// Verificar que hi ha nom i arxiu
+if ($nom && isset($_FILES['imagen'])) {
+    
+    $arxiu = $_FILES['imagen'];
+    
+    // Validar que és una imatge
+    $tipusPermesos = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!in_array($arxiu['type'], $tipusPermesos)) {
+        echo json_encode(['error' => 'L\'arxiu ha de ser una imatge (JPG, PNG, GIF o WEBP)']);
+        exit;
+    }
+    
+    // Validar mida (màxim 5MB)
+    if ($arxiu['size'] > 5000000) {
+        echo json_encode(['error' => 'L\'arxiu és massa gran (màxim 5MB)']);
+        exit;
+    }
+    
+    // Crear les carpetes si no existeixen
+    if (!is_dir('uploads/')) {
+        mkdir('uploads/', 0777, true);
+    }
+    if (!is_dir('uploads/banderas/')) {
+        mkdir('uploads/banderas/', 0777, true);
+    }
+    
+    // Crear nom únic per evitar duplicats
+    $extensio = pathinfo($arxiu['name'], PATHINFO_EXTENSION);
+    $nomUnic = uniqid() . '_' . time() . '.' . $extensio;
+    $rutaDesti = 'uploads/banderas/' . $nomUnic;
+    
+    // Guardar l'arxiu
+    if (move_uploaded_file($arxiu['tmp_name'], $rutaDesti)) {
+        
+        // Guardar a la base de dades
+        $sql = "INSERT INTO paises (nombre, `url`) VALUES (?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss', $nom, $rutaDesti);
+        $stmt->execute();
+        $stmt->close();
 
-if ($nombre && $url) {
-    $sql = "INSERT INTO paises (nombre, `url`) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ss', $nombre, $url);
-    $stmt->execute();
-    $stmt->close();
+        $idPais = $conn->insert_id;
 
-    $idPais = $conn->insert_id;
-
-    $sqlQ = "INSERT INTO questions (idRespuestaCorrecta) VALUES (?)";
-    $stmtQ = $conn->prepare($sqlQ);
-    $stmtQ->bind_param('i', $idPais);
-    $stmtQ->execute();
-    $stmtQ->close();
+        $sqlQ = "INSERT INTO questions (idRespuestaCorrecta) VALUES (?)";
+        $stmtQ = $conn->prepare($sqlQ);
+        $stmtQ->bind_param('i', $idPais);
+        $stmtQ->execute();
+        $stmtQ->close();
+        
+        echo json_encode([
+            'exit' => true, 
+            'missatge' => 'Pregunta creada correctament'
+        ]);
+        
+    } else {
+        echo json_encode(['error' => 'Error al guardar l\'arxiu']);
+    }
+    
+} else {
+    echo json_encode(['error' => 'Falten dades (nom o imatge)']);
 }
 
 $conn->close();
