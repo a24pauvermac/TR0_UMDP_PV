@@ -38,13 +38,21 @@ foreach ($preguntes_seleccionades as $pregunta) {
     $respostes = [];
 
     while ($row = $resResult->fetch_assoc()) {
-        // Extreure només el nom del fitxer de la ruta completa per a les respostes aleatòries
-        $row['url'] = basename($row['url']);
+        // Si és una URL local (uploads/banderas/), extreure només el nom del fitxer
+        // Si és una URL externa (http/https), mantenir-la com està
+        if (strpos($row['url'], 'uploads/banderas/') === 0) {
+            $row['url'] = basename($row['url']);
+        }
         $respostes[] = $row;
     }
 
-    // Extreure només el nom del fitxer de la ruta completa
-    $nomFitxer = basename($pregunta['image']);
+    // Si és una URL local (uploads/banderas/), extreure només el nom del fitxer
+    // Si és una URL externa (http/https), mantenir-la com està
+    if (strpos($pregunta['image'], 'uploads/banderas/') === 0) {
+        $nomFitxer = basename($pregunta['image']);
+    } else {
+        $nomFitxer = $pregunta['image'];
+    }
     
     $respostes[] = [
         'id' => $pregunta['idCorrecte'],

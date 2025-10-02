@@ -88,7 +88,13 @@ function mostrarPregunta(pregunta, indice) {
     
     let respostaCorrecta = pregunta.respostes.find(r => r.id == pregunta.idCorrecte);
     if (respostaCorrecta) {
-        htmlString += `<img src="servir_imatge.php?fitxer=${respostaCorrecta.url}" alt="Bandera">`;   
+        // Si és una URL externa (comença amb http), usar-la directament
+        // Si és només el nom del fitxer, usar servir_imatge.php
+        if (respostaCorrecta.url.startsWith('http')) {
+            htmlString += `<img src="${respostaCorrecta.url}" alt="Bandera">`;   
+        } else {
+            htmlString += `<img src="servir_imatge.php?fitxer=${respostaCorrecta.url}" alt="Bandera">`;   
+        }
     }
     htmlString += `<h3>A quin país pertany aquesta bandera?</h3>`;
 
