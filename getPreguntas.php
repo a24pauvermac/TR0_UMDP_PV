@@ -58,7 +58,7 @@ foreach ($preguntes_seleccionades as $pregunta) {
         'id' => $pregunta['idCorrecte'],
         'nombre' => $pregunta['correctName'],
         'url' => $nomFitxer
-    ];
+        ];
 
     $pregSenseIndex[] = [
         'idPregunta' => $pregunta['idPregunta'],
