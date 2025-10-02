@@ -1,38 +1,102 @@
-# TR0 UMD PAULA VERA
+# Quiz de Banderes dels Països
 
-Una aplicació web de quiz sobre banderes de països desenvolupada en PHP, JavaScript i MySQL.
+Un quiz interactiu per endevinar banderes de països amb una interfície moderna i estètica glassmorphism.
 
-## Configuració
+## Estructura del Projecte
 
-### 1. Base de dades
-- Crea una base de dades MySQL amb les taules necessàries
-- Les taules requerides són: `questions` i `paises`
+```
+TR0_UMDP_PV/
+├── index.php                 # Punt d'entrada principal
+├── src/                      # Codi font
+│   ├── html/                 # Pàgines HTML
+│   │   ├── index.html        # Pàgina principal del quiz
+│   │   ├── admin.html        # Panel d'administració
+│   │   └── landing.html      # Pàgina de benvinguda
+│   ├── css/                  # Estils CSS
+│   │   └── styles.css        # Estils principals amb glassmorphism
+│   ├── js/                   # JavaScript
+│   │   ├── script.js         # Lògica del quiz
+│   │   └── admin-gest.js     # Gestió d'administració
+│   └── php/                  # Backend PHP
+│       ├── conexio.php       # Connexió a la base de dades
+│       ├── getPreguntas.php  # Obtenir preguntes
+│       ├── servir_imatge.php # Servir imatges
+│       ├── addPregunta.php   # Afegir preguntes
+│       ├── deletePregunta.php# Eliminar preguntes
+│       ├── updatePregunta.php# Actualitzar preguntes
+│       ├── comprovaPregunta.php # Verificar respostes
+│       ├── final.php         # Pàgina final
+│       ├── getNovaPregunta   # Obtenir nova pregunta
+│       └── quiz.json         # Dades de prova
+├── assets/                   # Recursos estàtics
+│   ├── images/               # Imatges del projecte
+│   │   └── background.jpg    # Imatge de fons
+│   └── uploads/              # Imatges pujades pels usuaris
+│       └── banderas/         # Bandera dels països
+├── config/                   # Configuració
+│   ├── docker-compose.yml    # Configuració Docker
+│   ├── Dockerfile           # Imatge Docker
+│   ├── nginx.conf           # Configuració Nginx
+│   ├── init.sql             # Inicialització BBDD
+│   └── conexio.php.example  # Exemple de connexió
+├── docs/                    # Documentació
+│   ├── README.md            # Aquest arxiu
+│   └── README-DOCKER.md     # Documentació Docker
+└── .gitignore              # Fitxers a ignorar per Git
+```
 
-### 2. Configuració d'arxius
-1. Copia `conexio.php.example` com `conexio.php`
-2. Actualitza les credencials de la base de dades a `conexio.php`
+## Començar
 
-### 3. Estructura de la base de dades
+### Opció 1: Servidor PHP Local
+```bash
+php -S localhost:8000
+# Accedir a: http://localhost:8000
+```
 
-#### Taula `questions`
-- `id` (INT, PRIMARY KEY)
-- `idRespuestaCorrecta` (INT, FOREIGN KEY a paises.id)
+### Opció 2: Docker (Recomanat)
+```bash
+cd config
+docker-compose up --build
+# Accedir a: http://localhost:8080
+```
 
-#### Taula `paises`
-- `id` (INT, PRIMARY KEY)
-- `nombre` (VARCHAR)
-- `url` (VARCHAR) - URL de la imatge de la bandera
+## Funcionalitats
 
-## Ús
-1. Obre `index.html` al teu navegador
-2. El joc carregarà 10 preguntes aleatòries
-3. Selecciona la resposta correcta per a cada bandera
-4. Al final veuràs la teva puntuació total
+### Gameplay
+- Quiz de 10 preguntes aleatòries sobre banderes
+- Timer de 5 minuts amb barra de progrés visual
+- Layout 2x2 per les respostes
+- Contador de preguntes (Pregunta X de 10)
+- Persistència amb localStorage
 
-## Arxius importants
-- `index.html` - Pàgina principal
-- `script.js` - Lògica del frontend
-- `styles.css` - Estils
-- `getPreguntas.php` - Obté preguntes de la base de dades
-- `comprovaPregunta.php` - Verifica les respostes
-- `final.php` - Mostra la puntuació final
+### Interfície
+- Disseny glassmorphism modern
+- Responsive design (mòbil i desktop)
+- Animacions suaus i transicions
+- Icona de casa per navegar entre pàgines
+- Font Libertinus Keyboard per "umdp"
+
+### Administració
+- Panel d'administració complet
+- Gestió d'imatges locals i externes
+- Afegir, editar i eliminar preguntes
+- Càrrega segura d'imatges
+
+### Tècnic
+- Connexió automàtica Docker/Local
+- Gestió d'errors robusta
+- Codi net i ben documentat
+
+## Tecnologies
+
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+- **Backend**: PHP 8.4
+- **Base de dades**: MySQL 8.0
+- **Servidor web**: Nginx
+- **Contenidor**: Docker & Docker Compose
+
+## Notes
+
+- Les imatges locals es guarden a `assets/uploads/banderas/`
+- Les imatges externes es carreguen directament des de URLs
+- La configuració de la base de dades és automàtica (Docker vs Local)

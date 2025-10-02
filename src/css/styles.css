@@ -7,46 +7,103 @@
 
 body {
     font-family: 'Onest', sans-serif;
-    background-image: url('css img/background.jpg');
+    background-image: url('../../assets/images/background.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Icono de casa en esquina superior derecha */
+#home-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+#home-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+    #home-icon i {
+        font-size: 18px;
+        color: #ffffff !important;
+    }
+
+/* Contenedor principal que agrupa header y juego */
+#main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Contenedor del juego simplificado */
+#joc-container {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* El juego principal dentro del contenedor */
+#joc-container #joc {
+    width: 100%;
 }
 
 /* Texto de fondo UMPD - Landing (color actual) */
 #texto-fondo-inicial {
     position: fixed;
-    top: -50px;
+    top: 100px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 20rem;
+    font-size: 15rem;
     font-weight: 900;
     color: #ffffffc9;
     z-index: -1;
     pointer-events: none;
-    font-family: 'Onest', sans-serif;
+    font-family: 'Libertinus Keyboard', monospace;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 /* Texto de fondo UMPD - Index (animación única de fuerte a transparente) */
 #texto-fondo {
     position: fixed;
-    top: -50px;
+    top: 100px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 20rem;
+    font-size: 15rem;
     font-weight: 900;
     color: #ffffffc9;
     z-index: -1;
     pointer-events: none;
-    font-family: 'Onest', sans-serif;
+    font-family: 'Libertinus Keyboard', monospace;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
     animation: fade-out 0.8s ease-out forwards;
 }
@@ -79,6 +136,8 @@ body {
     position: relative;
     z-index: 10;
 }
+
+
 
 /* Títulos */
 h1, h2 {
@@ -193,28 +252,113 @@ a:hover {
 
 /* Elementos del juego */
 #questionari {
-    margin: 30px 0;
+    margin: 15px 0;
 }
 
-#marcador {
-    background: rgba(46, 204, 113, 0.2);
+/* Marcador en el header */
+#header-container #marcador {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(46, 204, 113, 0.4);
-    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
     padding: 15px;
-    margin: 20px 0;
-    font-weight: 600;
-    color: #ffffff;
-    box-shadow: 0 8px 32px rgba(189, 189, 189, 0.1);
+    margin: 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-/* Imágenes de banderas */
+.marcador-content {
+    text-align: center;
+}
+
+#marcador .marcador-text {
+    color: rgba(255, 255, 255, 0.9) !important;
+    margin: 8px 0 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    font-family: 'Onest', sans-serif !important;
+}
+
+/* Contenedor del header con temporizador y marcador lado a lado */
+#header-container {
+    max-width: 500px; /* Mismo ancho que joc-container */
+    width: 100%;
+    margin: 0 auto;
+    display: none; /* Oculto por defecto */
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Temporizador en el header */
+#header-container #temporizador-container {
+    flex: 1;
+    position: relative;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.temporizador-container {
+    max-width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+.barra-temporizador {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.barra-temporizador-progreso {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    transition: width 1s linear;
+    width: 100%;
+}
+
+.temps-text {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    display: block;
+    width: 100%;
+}
+
+/* Contenedor de respuestas en grid 2x2 */
+.respostes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 12px;
+    margin: 15px 0;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Imágenes de banderas - mismo ancho que el grid */
 img {
-    width: 200px;
+    width: 500px;
+    max-width: 100%;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    margin: 15px 0;
+    margin: 10px auto;
+    display: block;
     transition: transform 0.3s ease;
 }
 
@@ -222,12 +366,9 @@ img:hover {
     transform: scale(1.05);
 }
 
-/* Botones de respuesta */
+/* Botones de respuesta para grid 2x2 */
 .btn-resposta {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 15px 20px;
+    padding: 10px 25px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -240,6 +381,7 @@ img:hover {
     font-weight: 500;
     transition: all 0.3s ease;
     box-shadow: 0 8px 32px rgba(189, 189, 189, 0.1);
+    width: 100%;
 }
 
 .btn-resposta:hover {
@@ -274,6 +416,15 @@ img:hover {
         padding: 30px 20px;
     }
     
+    #main-content {
+        max-width: 500px;
+    }
+    
+    #joc-container {
+        max-width: 500px;
+    }
+    
+    
     h1 {
         font-size: 1.5rem;
     }
@@ -283,7 +434,53 @@ img:hover {
     }
     
     img {
-        width: 150px;
+        width: 300px;
+        margin: 8px auto;
+    }
+    
+    .respostes-grid {
+        max-width: 350px;
+        gap: 8px;
+        margin: 10px 0;
+    }
+    
+    .btn-resposta {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    #header-container {
+        flex-direction: column;
+        max-width: 500px;
+        gap: 10px;
+        margin-bottom: 5px;
+    }
+    
+    #header-container #temporizador-container {
+        padding: 12px;
+    }
+    
+    #header-container #marcador {
+        padding: 12px;
+    }
+    
+    .barra-temporizador {
+        height: 6px;
+    }
+    
+    .temps-text {
+        font-size: 12px;
+    }
+    
+    #home-icon {
+        top: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    #home-icon i {
+        font-size: 16px;
     }
     
     .botones-fila {
@@ -392,15 +589,15 @@ p {
 /* Estilos para página de administración */
 #texto-fondo-admin {
     position: fixed;
-    top: -50px;
+    top: 100px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 20rem;
+    font-size: 15rem;
     font-weight: 900;
     color: #ffffffc9;
     z-index: -1;
     pointer-events: none;
-    font-family: 'Onest', sans-serif;
+    font-family: 'Libertinus Keyboard', monospace;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 

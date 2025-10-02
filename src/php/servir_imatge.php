@@ -5,7 +5,7 @@
 $nomFitxer = $_GET['fitxer'];
 
 // Construir la ruta de la imatge
-$rutaImatge = 'uploads/banderas/' . $nomFitxer;
+$rutaImatge = __DIR__ . '/../../assets/uploads/banderas/' . $nomFitxer;
 
 // Si el fitxer existeix, mostrar-lo
 if (file_exists($rutaImatge)) {

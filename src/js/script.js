@@ -14,8 +14,9 @@ function guardarNom() {
   if (nom.trim() !== "") {
     localStorage.setItem("nomUsuari", nom);
     document.getElementById("formulario-usuario").style.display = "none";
-    document.getElementById("joc").style.display = "block";
-    document.getElementById("saludoUsuario").textContent = `Hola, ${nom}!`;
+    document.getElementById("main-content").style.display = "flex";
+    document.getElementById("header-container").style.display = "flex";
+    document.getElementById("joc-container").style.display = "block";
     iniciarJoc();
   }
 }
@@ -35,14 +36,21 @@ function esborrarNom() {
     tempsRestant: 300
   };
   
-  // Mostrar formulario de nuevo
-  document.getElementById("joc").style.display = "none";
+  // Mostrar formulario de nuevo y ocultar main-content y juego
+  document.getElementById("main-content").style.display = "none";
+  document.getElementById("joc-container").style.display = "none";
+  document.getElementById("header-container").style.display = "none";
   document.getElementById("formulario-usuario").style.display = "block";
   document.getElementById("nomUsuari").value = "";
+  
+  // Netejar contingut
+  document.getElementById("questionari").innerHTML = "";
+  document.getElementById("marcador").innerHTML = "";
+  document.getElementById("temporizador-container").innerHTML = "";
 }
 
 function iniciarJoc() {
-    fetch('getPreguntas.php?num=10')
+    fetch('../php/getPreguntas.php?num=10')
         .then(response => response.json())
         .then(data => {
             console.log('Dades rebudes:', data);
@@ -93,14 +101,17 @@ function mostrarPregunta(pregunta, indice) {
         if (respostaCorrecta.url.startsWith('http')) {
             htmlString += `<img src="${respostaCorrecta.url}" alt="Bandera">`;   
         } else {
-            htmlString += `<img src="servir_imatge.php?fitxer=${respostaCorrecta.url}" alt="Bandera">`;   
+            htmlString += `<img src="../php/servir_imatge.php?fitxer=${respostaCorrecta.url}" alt="Bandera">`;   
         }
     }
     htmlString += `<h3>A quin país pertany aquesta bandera?</h3>`;
-
+    
+    // Crear contenedor grid para las respuestas
+    htmlString += `<div class="respostes-grid">`;
     for (let j = 0; j < pregunta.respostes.length; j++) {
         htmlString += `<button id="${indice}_${j}" preg="${indice}" resp="${j}" class="btn-resposta">${pregunta.respostes[j].nombre}</button>`;
     }
+    htmlString += `</div>`;
 
     contenidor.innerHTML = htmlString;
 }
@@ -122,20 +133,12 @@ function marcarRespuesta(numPregunta, numRespuesta) {
 }
 function actualitzaMarcador() {
   let marcador = document.getElementById("marcador");
-  let htmlString = `Preguntes respostes ${estatDeLaPartida.contadorPreguntes}/${NPREGUNTAS} <br>`
   
-  // Mostrar temps restant
-  let minuts = Math.floor(estatDeLaPartida.tempsRestant / 60);
-  let segons = estatDeLaPartida.tempsRestant % 60;
-  let tempsFormat = `${minuts}:${segons.toString().padStart(2, '0')}`;
-  htmlString += `Temps restant: ${tempsFormat} <br>`
-  
-  // Barra de progrés del temps
-  let percentatgeTemps = (estatDeLaPartida.tempsRestant / 300) * 100;
-  htmlString += `
-    <div style="width: 100%; background-color: #f0f0f0; border-radius: 5px; margin: 5px 0;">
-      <div style="width: ${percentatgeTemps}%; height: 20px; background-color: ${percentatgeTemps > 20 ? '#4CAF50' : '#f44336'}; border-radius: 5px; transition: width 0.3s ease;"></div>
-    </div>`
+  let htmlString = `
+    <div class="marcador-content">
+      <p class="marcador-text">Pregunta ${estatDeLaPartida.contadorPreguntes + 1} de ${NPREGUNTAS}</p>
+    </div>
+  `;
 
   if (estatDeLaPartida.contadorPreguntes == NPREGUNTAS) {
     htmlString += `<button id="btnEnviar">Enviar Resultats</button>`
@@ -143,6 +146,9 @@ function actualitzaMarcador() {
     htmlString += `<button id="btnEnviar" style="display:none">Enviar Resultats</button>`
   }
   marcador.innerHTML = htmlString;
+  
+  // Actualitzar el temporizador en el seu propi div
+  actualitzarTemporizador();
 
   //ELIMINO TOTS ELS "SELECCIONADA QUE TINGUI" DE DARRERE ENDAVANT PER EVITAR ERRORS
   let seleccio = document.getElementsByClassName("seleccionada")
@@ -171,34 +177,14 @@ function enviarResultats() {
     // Aturar el timer
     aturarTimer();
     
-    let acertades = 0;
-    let fallades = 0;
-    
-    for (let i = 0; i < NPREGUNTAS; i++) {
-        let respostaUsuari = estatDeLaPartida.respostesUsuari[i];
-        let pregunta = preguntes[i];
-        let respostaCorrecta = pregunta.respostes.find(r => r.id == pregunta.idCorrecte);
-        
-        if (respostaUsuari !== undefined) {
-            let respostaSeleccionada = pregunta.respostes[respostaUsuari];
-            if (respostaSeleccionada.id == respostaCorrecta.id) {
-                acertades++;
-            } else {
-                fallades++;
-            }
-        }
-    }
-    
     // Ocultar marcador
     document.getElementById("marcador").innerHTML = "";
     
-    // Mostrar resultados
+    // Mostrar resultados simples
     let contenidor = document.getElementById("questionari");
     contenidor.innerHTML = `
         <h1>Joc Acabat!</h1>
-        <p>Preguntes acertades: ${acertades}</p>
-        <p>Preguntes fallades: ${fallades}</p>
-        <p>Total preguntes: ${NPREGUNTAS}</p>
+        <p>Has completat ${NPREGUNTAS} preguntes</p>
         <p>Temps restant: ${Math.floor(estatDeLaPartida.tempsRestant / 60)}:${(estatDeLaPartida.tempsRestant % 60).toString().padStart(2, '0')}</p>
         <button id="btnTornarComençar">Tornar a Començar</button>
     `;
@@ -263,27 +249,29 @@ function configurarBotoEnviar() {
 
 // Funció per actualitzar només el temps (més ràpida)
 function actualitzarTemps() {
-  let marcador = document.getElementById("marcador");
-  let htmlActual = marcador.innerHTML;
+  // Actualitzar només el temporizador
+  actualitzarTemporizador();
+}
+
+function actualitzarTemporizador() {
+  let temporizadorContainer = document.getElementById("temporizador-container");
   
-  // Actualitzar només la part del temps
+  // Crear el temporizador blanco
   let minuts = Math.floor(estatDeLaPartida.tempsRestant / 60);
   let segons = estatDeLaPartida.tempsRestant % 60;
   let tempsFormat = `${minuts}:${segons.toString().padStart(2, '0')}`;
-  
-  // Reemplaçar el temps en l'HTML existent
-  let nouHtml = htmlActual.replace(/Temps restant: \d+:\d+/, `Temps restant: ${tempsFormat}`);
-  
-  // Actualitzar la barra de progrés
   let percentatgeTemps = (estatDeLaPartida.tempsRestant / 300) * 100;
-  nouHtml = nouHtml.replace(/width: \d+\.?\d*%/, `width: ${percentatgeTemps}%`);
-  nouHtml = nouHtml.replace(/background-color: #[0-9A-Fa-f]{6}/, 
-    `background-color: ${percentatgeTemps > 20 ? '#4CAF50' : '#f44336'}`);
   
-  marcador.innerHTML = nouHtml;
-  // Reconfigurar el botó Enviar després d'assignar innerHTML perquè
-  // l'element s'ha recreat i hem perdut els listeners anteriors.
-  configurarBotoEnviar();
+  let htmlString = `
+    <div class="temporizador-container">
+      <div class="barra-temporizador">
+        <div class="barra-temporizador-progreso" style="width: ${percentatgeTemps}%"></div>
+      </div>
+      <p class="temps-text">Temps restant: ${tempsFormat}</p>
+    </div>
+  `;
+  
+  temporizadorContainer.innerHTML = htmlString;
 }
 
 function tornarComençar() {
@@ -308,17 +296,17 @@ function tornarComençar() {
 window.addEventListener('DOMContentLoaded', (event) => {
     // Configurar event listeners per als botons principals
     document.getElementById('btnComençar').addEventListener('click', guardarNom);
-    document.getElementById('btnEsborrar').addEventListener('click', esborrarNom);
     
     if (localStorage.getItem("nomUsuari")) {
-        // Usuario ya existe - saludar
-        let nom = localStorage.getItem("nomUsuari");
+        // Usuario ya existe - iniciar juego
         document.getElementById("formulario-usuario").style.display = "none";
-        document.getElementById("joc").style.display = "block";
-        document.getElementById("saludoUsuario").textContent = `Hola, ${nom}!`;
+        document.getElementById("main-content").style.display = "flex";
+        document.getElementById("header-container").style.display = "flex";
+        document.getElementById("joc-container").style.display = "block";
         iniciarJoc();
     } else {
         // Usuario nuevo - mostrar formulario
         document.getElementById("formulario-usuario").style.display = "block";
+        document.getElementById("main-content").style.display = "none";
     }
 });

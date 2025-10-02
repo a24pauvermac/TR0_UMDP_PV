@@ -1,5 +1,5 @@
 <?php
-require "conexio.php";
+require __DIR__ . "/conexio.php";
 header('Content-Type: application/json');
 
 $num = isset($_GET['num']) ? intval($_GET['num']) : 10;
@@ -38,21 +38,15 @@ foreach ($preguntes_seleccionades as $pregunta) {
     $respostes = [];
 
     while ($row = $resResult->fetch_assoc()) {
-        // Si és una URL local (uploads/banderas/), extreure només el nom del fitxer
+        // Si és una URL local (només el nom del fitxer), mantenir-lo
         // Si és una URL externa (http/https), mantenir-la com està
-        if (strpos($row['url'], 'uploads/banderas/') === 0) {
-            $row['url'] = basename($row['url']);
-        }
+        // Les URLs locals ja són només el nom del fitxer
         $respostes[] = $row;
     }
 
-    // Si és una URL local (uploads/banderas/), extreure només el nom del fitxer
+    // Si és una URL local (només el nom del fitxer), mantenir-lo
     // Si és una URL externa (http/https), mantenir-la com està
-    if (strpos($pregunta['image'], 'uploads/banderas/') === 0) {
-        $nomFitxer = basename($pregunta['image']);
-    } else {
-        $nomFitxer = $pregunta['image'];
-    }
+    $nomFitxer = $pregunta['image'];
     
     $respostes[] = [
         'id' => $pregunta['idCorrecte'],

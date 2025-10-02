@@ -1,5 +1,5 @@
 <?php
-include 'conexio.php';
+include __DIR__ . "/conexio.php";
 
 // Rebre el nom del país
 $nom = $_POST['nombre'] ?? '';
@@ -23,25 +23,25 @@ if ($nom && isset($_FILES['imagen'])) {
     }
     
     // Crear les carpetes si no existeixen
-    if (!is_dir('uploads/')) {
-        mkdir('uploads/', 0777, true);
-    }
-    if (!is_dir('uploads/banderas/')) {
-        mkdir('uploads/banderas/', 0777, true);
+    $uploadDir = __DIR__ . '/../../assets/uploads/banderas/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
     }
     
     // Crear nom únic per evitar duplicats
     $extensio = pathinfo($arxiu['name'], PATHINFO_EXTENSION);
     $nomUnic = uniqid() . '_' . time() . '.' . $extensio;
-    $rutaDesti = 'uploads/banderas/' . $nomUnic;
+    $rutaDesti = $uploadDir . $nomUnic;
     
     // Guardar l'arxiu
     if (move_uploaded_file($arxiu['tmp_name'], $rutaDesti)) {
         
         // Guardar a la base de dades
+        // Guardar només el nom del fitxer per a la base de dades
+        $nomFitxer = basename($rutaDesti);
         $sql = "INSERT INTO paises (nombre, `url`) VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ss', $nom, $rutaDesti);
+        $stmt->bind_param('ss', $nom, $nomFitxer);
         $stmt->execute();
         $stmt->close();
 

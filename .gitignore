@@ -1,17 +1,78 @@
-# Arxius amb credencials sensibles
-conexio.php
+# Archivos de configuración sensibles
+config/conexio.php
 
-# Arxius del sistema
+# Archivos de Docker
+docker-compose.override.yml
+.docker/
+
+# Archivos de logs
+*.log
+logs/
+
+# Archivos temporales
+*.tmp
+*.temp
 .DS_Store
 Thumbs.db
 
-# Arxius de logs
-*.log
+# Archivos de editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Arxius temporals
-*.tmp
-*.temp
+# Archivos de Node.js (si se añaden dependencias futuras)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Arxius de còpia de seguretat
+# Archivos de PHP
+vendor/
+composer.lock
+
+# Archivos de base de datos local
+*.sql
+*.db
+*.sqlite
+
+# Archivos de backup
 *.bak
 *.backup
+
+# Archivos de cache
+cache/
+*.cache
+
+# Archivos de sesión PHP
+sessions/
+
+# Archivos de upload temporal
+uploads/temp/
+
+# Variables de entorno
+.env
+.env.local
+.env.production
+
+# Archivos de configuración local
+config/local.php
+config/database.local.php
+
+# Archivos de test
+test/
+tests/
+*test.php
+
+# Archivos de documentación temporal
+docs/temp/
+docs/draft/
+
+# Archivos de imágenes temporales
+assets/temp/
+assets/draft/
+
+# Archivos de configuración del sistema
+.htaccess.local
+config.local.php
