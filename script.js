@@ -88,7 +88,7 @@ function mostrarPregunta(pregunta, indice) {
     
     let respostaCorrecta = pregunta.respostes.find(r => r.id == pregunta.idCorrecte);
     if (respostaCorrecta) {
-        htmlString += `<img src="${respostaCorrecta.url}" alt="Bandera">`;   
+        htmlString += `<img src="servir_imatge.php?fitxer=${respostaCorrecta.url}" alt="Bandera">`;   
     }
     htmlString += `<h3>A quin país pertany aquesta bandera?</h3>`;
 

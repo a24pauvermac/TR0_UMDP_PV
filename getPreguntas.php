@@ -38,13 +38,18 @@ foreach ($preguntes_seleccionades as $pregunta) {
     $respostes = [];
 
     while ($row = $resResult->fetch_assoc()) {
+        // Extreure només el nom del fitxer de la ruta completa per a les respostes aleatòries
+        $row['url'] = basename($row['url']);
         $respostes[] = $row;
     }
 
+    // Extreure només el nom del fitxer de la ruta completa
+    $nomFitxer = basename($pregunta['image']);
+    
     $respostes[] = [
         'id' => $pregunta['idCorrecte'],
         'nombre' => $pregunta['correctName'],
-        'url' => $pregunta['image']
+        'url' => $nomFitxer
     ];
 
     $pregSenseIndex[] = [
