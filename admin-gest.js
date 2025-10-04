@@ -32,7 +32,7 @@ function mostrarVistaLista(data) {
         <div class="pregunta-content">
           ${respostaCorrecta ? `
             <div class="bandera-container">
-              <img src="${respostaCorrecta.url.startsWith('http') ? respostaCorrecta.url : '../php/servir_imatge.php?fitxer=' + respostaCorrecta.url}" alt="Bandera resposta correcta" class="bandera-imagen">
+              <img src="${respostaCorrecta.url.startsWith('http') ? respostaCorrecta.url : 'servir_imatge.php?fitxer=' + respostaCorrecta.url}" alt="Bandera resposta correcta" class="bandera-imagen">
             </div>
           ` : ''}
           
@@ -110,7 +110,7 @@ function mostrarVistaCrear() {
       formData.append('nombre', nom)
       formData.append('imagen', arxiu)
 
-      fetch('../php/addPregunta.php', {
+      fetch('addPregunta.php', {
         method: 'POST',
         body: formData
       })
@@ -143,7 +143,7 @@ function mostrarVistaEditar(idPregunta, nom, url) {
       let url = document.getElementById('urlBandera').value;
       let dades = { idPregunta, nom, url };
 
-      fetch('../php/updatePregunta.php', {
+      fetch('updatePregunta.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(dades)
@@ -163,7 +163,7 @@ function eliminarPregunta(idPregunta) {
     if (confirm('Estàs segur que vols eliminar aquesta pregunta?')) {
         let dades = { idPregunta };
 
-        fetch('../php/deletePregunta.php', {
+        fetch('deletePregunta.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(dades)
@@ -171,7 +171,7 @@ function eliminarPregunta(idPregunta) {
         .then(resp => resp.json())
         .then(data => {
             console.log(data);
-            fetch('../php/getPreguntas.php?num=20')
+            fetch('getPreguntas.php?num=20')
                 .then(response => response.json())
                 .then(data => {
                     mostrarVistaLista(data);
@@ -215,7 +215,7 @@ let contenidor = document.getElementById('admin-container');
 contenidor.addEventListener('click', function(e) {
 
    if (e.target.classList.contains('btn-lista')) {
-    fetch('../php/getPreguntas.php?num=20')
+    fetch('getPreguntas.php?num=20')
       .then(response => response.json())
       .then(data => {
         console.log("Dades rebudes del servidor:", data);

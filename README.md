@@ -1,6 +1,7 @@
-# Quiz de Banderes dels Països
 
-Un quiz interactiu per endevinar banderes de països amb una interfície moderna i estètica glassmorphism.
+# TR0 UMD PAULA VERA
+
+Una aplicació web de quiz sobre banderes de països desenvolupada en PHP, JavaScript i MySQL.
 
 ## Estructura del Projecte
 
@@ -45,79 +46,34 @@ TR0_UMDP_PV/
 └── .gitignore              # Fitxers a ignorar per Git
 ```
 
-## Començar
 
-### Opció 1: Servidor PHP Local
-```bash
-php -S localhost:8000
-# Accedir a: http://localhost:8000
-```
 
-### Opció 2: Docker (Recomanat)
-```bash
-cd config
-docker-compose up --build
-# Accedir a: http://localhost:8080
-```
+## Configuració
 
-## Funcionalitats
+### 1. Base de dades
+- Crea una base de dades MySQL amb les taules necessàries
+- Les taules requerides són: `questions` i `paises`
 
-### Gameplay
-- Quiz de 10 preguntes aleatòries sobre banderes
-- Timer de 5 minuts amb barra de progrés visual
-- Layout 2x2 per les respostes
-- Contador de preguntes (Pregunta X de 10)
-- Persistència amb localStorage
+### 2. Configuració d'arxius
+1. Copia `conexio.php.example` com `conexio.php`
+2. Actualitza les credencials de la base de dades a `conexio.php`
 
-### Interfície
-- Disseny glassmorphism modern
-- Responsive design (mòbil i desktop)
-- Animacions suaus i transicions
-- Icona de casa per navegar entre pàgines
-- Font Libertinus Keyboard per "umdp"
+### 3. Estructura de la base de dades
 
-### Administració
-- Panel d'administració complet
-- Gestió d'imatges locals i externes
-- Afegir, editar i eliminar preguntes
-- Càrrega segura d'imatges
+#### Taula `questions`
+- `id` (INT, PRIMARY KEY)
+- `idRespuestaCorrecta` (INT, FOREIGN KEY a paises.id)
 
-### Tècnic
-- Connexió automàtica Docker/Local
-- Gestió d'errors robusta
-- Codi net i ben documentat
+#### Taula `paises`
+- `id` (INT, PRIMARY KEY)
+- `nombre` (VARCHAR)
+- `url` (VARCHAR) - URL de la imatge de la bandera
 
-## Tecnologies
+## Ús
+1. Obre `index.html` al teu navegador
+2. El joc carregarà 10 preguntes aleatòries
+3. Selecciona la resposta correcta per a cada bandera
+4. Al final veuràs la teva puntuació total
 
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Backend**: PHP 8.4
-- **Base de dades**: MySQL 8.0
-- **Servidor web**: Nginx
-- **Contenidor**: Docker & Docker Compose
-
-## Seguretat
-
-**IMPORTANT**: Abans d'usar en producció:
-
-1. **Copia `config/env.example` a `config/.env`**:
-   ```bash
-   cp config/env.example config/.env
-   ```
-
-2. **Modifica les credencials** en `config/.env`:
-   ```bash
-   MYSQL_ROOT_PASSWORD=tu_password_segur_aqui
-   MYSQL_PASSWORD=tu_password_usuario_segur_aqui
-   ```
-
-3. **Els arxius sensibles estan protegits** per `.gitignore`:
-   - `config/.env` (credencials reals)
-   - `config/conexio.php` (connexió real)
-   - `config/docker-compose.local.yml` (configuració local)
-
-## Notes
-
-- Les imatges locals es guarden a `assets/uploads/banderas/`
-- Les imatges externes es carreguen directament des de URLs
-- La configuració de la base de dades és automàtica (Docker vs Local)
-- **Les credencials per defecte són només per desenvolupament**
+## ODS
+La meva aplicació de qüestionaris s’alinea amb l’ODS 4 perquè facilita estudiar de manera fàcil i accessible. Permet aprendre des de qualsevol dispositiu, manté una navegació simple sense obstacles tècnics i mostra resultats clars per continuar millorant. Així, aconseguim un aprenentatge senzill i agradable per a tothom, que és just el que promou l’educació de qualitat. A més a més, l’aplicació també té l’objectiu d’entretenir les persones usuàries, creant una sensació de joc alhora que s’aprèn.
