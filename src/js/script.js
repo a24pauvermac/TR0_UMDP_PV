@@ -125,45 +125,41 @@ function actualitzaMarcador() {
     </div>
   `;
 
-  if (estatDeLaPartida.contadorPreguntes === NPREGUNTAS) {
-    htmlString += `<button id="btnEnviar">Enviar Resultats</button>`
-  } else {
-    htmlString += `<button id="btnEnviar" style="display:none">Enviar Resultats</button>`
-  }
   marcador.innerHTML = htmlString;
   
   actualitzarTemporizador();
 
-  let seleccio = document.getElementsByClassName("seleccionada")
-  for (let k = seleccio.length - 1; k >= 0; k--) {
-    seleccio[k].classList.remove("seleccionada")
-  }
-
-  for (let i = 0; i < estatDeLaPartida.respostesUsuari.length; i++) {
-    let resposta = estatDeLaPartida.respostesUsuari[i]
-    if (resposta !== undefined) {
-      let element = document.getElementById(`${i}_${resposta}`);
-      if (element) element.classList.add("seleccionada")
-    }
-  }
-
   localStorage.setItem("partida", JSON.stringify(estatDeLaPartida))
   console.log(estatDeLaPartida)
   
-  configurarBotoEnviar();
+  if (estatDeLaPartida.contadorPreguntes === NPREGUNTAS) {
+    setTimeout(() => {
+      enviarResultats();
+    }, 500);
+  }
 }
 
 function enviarResultats() {
     aturarTimer();
     
     document.getElementById("marcador").innerHTML = "";
+    document.getElementById("temporizador-container").innerHTML = "";
+    
+    let correctes = 0;
+    for (let i = 0; i < NPREGUNTAS; i++) {
+        let respostaUsuari = estatDeLaPartida.respostesUsuari[i];
+        let respostaCorrectaIndex = preguntes[i].respostes.findIndex(r => r.id === preguntes[i].idCorrecte);
+        if (respostaUsuari === respostaCorrectaIndex) {
+            correctes++;
+        }
+    }
     
     let contenidor = document.getElementById("questionari");
     contenidor.innerHTML = `
-        <h1>Joc Acabat!</h1>
-        <p>Has completat ${NPREGUNTAS} preguntes</p>
-        <p>Temps restant: ${Math.floor(estatDeLaPartida.tempsRestant / 60)}:${(estatDeLaPartida.tempsRestant % 60).toString().padStart(2, '0')}</p>
-        <button id="btnTornarComençar">Tornar a Començar</button>
+        <h1 class="resultat-puntuacio">Joc Acabat!</h1>
+        <p class="resultat-titol">Has encertat ${correctes} de ${NPREGUNTAS} respostes!</p>
+        <p class="resultat-temps">Temps restant: ${Math.floor(estatDeLaPartida.tempsRestant / 60)}:${(estatDeLaPartida.tempsRestant % 60).toString().padStart(2, '0')}</p>
+        <button id="btnTornarComençar" class="btn-glassify">Tornar a Començar</button>
     `;
     
     document.getElementById("btnTornarComençar").addEventListener("click", tornarComençar);
@@ -204,13 +200,6 @@ function gestionarClicResposta(e) {
   }
 }
 
-function configurarBotoEnviar() {
-  let btnEnviar = document.getElementById("btnEnviar");
-  if (btnEnviar) {
-    btnEnviar.removeEventListener("click", enviarResultats);
-    btnEnviar.addEventListener("click", enviarResultats);
-  }
-}
 
 function actualitzarTemps() {
   actualitzarTemporizador();
