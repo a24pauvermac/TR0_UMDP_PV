@@ -29,10 +29,5 @@ Una aplicació web de quiz sobre banderes de països desenvolupada en PHP, JavaS
 3. Selecciona la resposta correcta per a cada bandera
 4. Al final veuràs la teva puntuació total
 
-## Arxius importants
-- `index.html` - Pàgina principal
-- `script.js` - Lògica del frontend
-- `styles.css` - Estils
-- `getPreguntas.php` - Obté preguntes de la base de dades
-- `comprovaPregunta.php` - Verifica les respostes
-- `final.php` - Mostra la puntuació final
+## ODS
+La meva aplicació de qüestionaris s’alinea amb l’ODS 4 perquè facilita estudiar de manera fàcil i accessible. Permet aprendre des de qualsevol dispositiu, manté una navegació simple sense obstacles tècnics i mostra resultats clars per continuar millorant. Així, aconseguim un aprenentatge senzill i agradable per a tothom, que és just el que promou l’educació de qualitat. A més a més, l’aplicació també té l’objectiu d’entretenir les persones usuàries, creant una sensació de joc alhora que s’aprèn.

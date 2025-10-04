@@ -9,7 +9,6 @@ $nom = $input['nom'] ?? '';
 $url = $input['url'] ?? '';
 
 if ($idPregunta && $nom && $url) {
-    // Primer obtenim el idRespuestaCorrecta per actualitzar el país
     $sql = "SELECT idRespuestaCorrecta FROM questions WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('i', $idPregunta);
@@ -19,7 +18,6 @@ if ($idPregunta && $nom && $url) {
     if ($row = $result->fetch_assoc()) {
         $idPais = $row['idRespuestaCorrecta'];
         
-        // Actualitzem el país
         $sqlUpdate = "UPDATE paises SET nombre = ?, url = ? WHERE id = ?";
         $stmtUpdate = $conn->prepare($sqlUpdate);
         $stmtUpdate->bind_param('ssi', $nom, $url, $idPais);

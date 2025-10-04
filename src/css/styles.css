@@ -1,4 +1,3 @@
-/* Reset y configuración base */
 * {
     margin: 0;
     padding: 0;
@@ -12,22 +11,22 @@ body {
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 10px;
     position: relative;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-/* Icono de casa en esquina superior derecha */
 #home-icon {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 1000;
+    z-index: 9999;
     width: 50px;
     height: 50px;
     display: flex;
@@ -55,7 +54,6 @@ body {
         color: #ffffff !important;
     }
 
-/* Contenedor principal que agrupa header y juego */
 #main-content {
     display: flex;
     flex-direction: column;
@@ -65,19 +63,16 @@ body {
     max-width: 500px;
 }
 
-/* Contenedor del juego simplificado */
 #joc-container {
     max-width: 500px;
     width: 100%;
     margin: 0 auto;
 }
 
-/* El juego principal dentro del contenedor */
 #joc-container #joc {
     width: 100%;
 }
 
-/* Texto de fondo UMPD - Landing (color actual) */
 #texto-fondo-inicial {
     position: fixed;
     top: 100px;
@@ -90,9 +85,9 @@ body {
     pointer-events: none;
     font-family: 'Libertinus Keyboard', monospace;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    animation: fade-in-umdp 0.8s ease-in forwards;
 }
 
-/* Texto de fondo UMPD - Index (animación única de fuerte a transparente) */
 #texto-fondo {
     position: fixed;
     top: 100px;
@@ -108,7 +103,6 @@ body {
     animation: fade-out 0.8s ease-out forwards;
 }
 
-/* Animación única de fuerte a transparente */
 @keyframes fade-out {
     0% {
         opacity: 1;
@@ -121,7 +115,19 @@ body {
     }
 }
 
-/* Contenedor principal con efecto glassmorphism */
+@keyframes fade-in-umdp {
+    0% {
+        opacity: 0;
+        color: #ffffff00;
+        text-shadow: 0 0 0px rgba(255, 255, 255, 0);
+    }
+    100% {
+        opacity: 1;
+        color: #ffffffc9;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+}
+
 #formulario-usuario, #joc {
     background: rgba(255, 255, 255, 0.136);
     backdrop-filter: blur(15px);
@@ -139,7 +145,6 @@ body {
 
 
 
-/* Títulos */
 h1, h2 {
     color: #ffffff;
     font-weight: 600;
@@ -152,7 +157,6 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* Input de texto */
 #nomUsuari {
     width: 100%;
     padding: 15px 20px;
@@ -179,7 +183,6 @@ h2 {
     opacity: 0.7;
 }
 
-/* Botón principal con efecto glass */
 #btnComençar {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
@@ -198,7 +201,6 @@ h2 {
     box-shadow: 0 8px 32px rgba(189, 189, 189, 0.1);
 }
 
-/* Botón esborrar con efecto glass */
 #btnEsborrar {
     background: rgba(231, 76, 60, 0.2);
     backdrop-filter: blur(15px);
@@ -233,7 +235,6 @@ h2 {
 
 
 
-/* Enlace de administración */
 a {
     color: #ffffff;
     text-decoration: none;
@@ -250,12 +251,10 @@ a:hover {
     color: #ffffff;
 }
 
-/* Elementos del juego */
 #questionari {
     margin: 15px 0;
 }
 
-/* Marcador en el header */
 #header-container #marcador {
     flex: 1;
     background: rgba(255, 255, 255, 0.1);
@@ -281,18 +280,16 @@ a:hover {
     font-family: 'Onest', sans-serif !important;
 }
 
-/* Contenedor del header con temporizador y marcador lado a lado */
 #header-container {
-    max-width: 500px; /* Mismo ancho que joc-container */
+    max-width: 500px;
     width: 100%;
     margin: 0 auto;
-    display: none; /* Oculto por defecto */
+    display: none;
     gap: 15px;
     align-items: center;
     margin-bottom: 15px;
 }
 
-/* Temporizador en el header */
 #header-container #temporizador-container {
     flex: 1;
     position: relative;
@@ -339,7 +336,6 @@ a:hover {
     width: 100%;
 }
 
-/* Contenedor de respuestas en grid 2x2 */
 .respostes-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -351,7 +347,6 @@ a:hover {
     margin-right: auto;
 }
 
-/* Imágenes de banderas - mismo ancho que el grid */
 img {
     width: 500px;
     max-width: 100%;
@@ -366,7 +361,6 @@ img:hover {
     transform: scale(1.05);
 }
 
-/* Botones de respuesta para grid 2x2 */
 .btn-resposta {
     padding: 10px 25px;
     background: rgba(255, 255, 255, 0.1);
@@ -391,7 +385,6 @@ img:hover {
     box-shadow: 0 10px 25px rgba(175, 175, 175, 0.15);
 }
 
-/* Estado seleccionado */
 .seleccionada {
     background: rgba(255, 193, 7, 0.3) !important;
     backdrop-filter: blur(15px);
@@ -401,12 +394,10 @@ img:hover {
     box-shadow: 0 10px 25px rgba(255, 193, 7, 0.2) !important;
 }
 
-/* Clase para ocultar elementos */
 .hidden {
     display: none;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -477,6 +468,7 @@ img:hover {
         right: 15px;
         width: 45px;
         height: 45px;
+        z-index: 9999;
     }
     
     #home-icon i {
@@ -486,6 +478,7 @@ img:hover {
     .botones-fila {
         flex-direction: column;
         gap: 20px;
+        margin-top: 20px;
     }
     
     p {
@@ -498,9 +491,63 @@ img:hover {
         font-size: 16px;
         height: 55px;
     }
+    
+    #admin-layout {
+        flex-direction: column;
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 0 10px;
+    }
+    
+    #user-panel {
+        width: 100%;
+        order: -1;
+        margin-bottom: 20px;
+    }
+    
+    .preguntas-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        max-height: 60vh;
+    }
+    
+    .pregunta-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .bandera-imagen {
+        width: 100%;
+        max-width: 150px;
+        height: auto;
+        aspect-ratio: 4/3;
+    }
+    
+    .vista-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .vista-header h2 {
+        flex: none;
+    }
+    
+    .vista-header.centered {
+        justify-content: center;
+    }
+    
+    .form-container {
+        padding: 20px;
+    }
+    
+    .form-actions .btn-admin {
+        min-width: auto;
+        width: 100%;
+    }
 }
 
-/* Título de landing */
 p {
     color: white;
     font-family: 'Onest', sans-serif;
@@ -508,10 +555,10 @@ p {
     font-weight: 100;
     text-align: center;
     margin-bottom: 40px;
+    margin-top: 80px;
     text-shadow: 0 2px 10px rgba(252, 251, 251, 0.3);
 }
 
-/* Contenedor de botones para landing */
 .botones-container {
     display: flex;
     flex-direction: column;
@@ -520,9 +567,9 @@ p {
     gap: 40px;
     min-height: 100vh;
     padding: 20px;
+    padding-top: 200px;
 }
 
-/* Contenedor de botones en fila */
 .botones-fila {
     display: flex;
     flex-direction: row;
@@ -530,7 +577,6 @@ p {
     align-items: center;
 }
 
-/* Botones de landing con IDs únicos */
 #btnComençarLanding, 
 #btnAdminLanding {
     background: rgba(255, 255, 255, 0.101);
@@ -552,7 +598,7 @@ p {
     justify-content: center;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
-    margin: 0;
+    margin: 0 !important;
     text-align: center;
 }
 
@@ -570,7 +616,6 @@ p {
     box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* Animaciones suaves */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -586,7 +631,6 @@ p {
     animation: fadeIn 0.6s ease-out;
 }
 
-/* Estilos para página de administración */
 #texto-fondo-admin {
     position: fixed;
     top: 100px;
@@ -601,6 +645,16 @@ p {
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
+#admin-layout {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+    min-height: calc(100vh - 100px);
+    align-items: flex-start;
+}
+
 #admin-container {
     background: rgba(255, 255, 255, 0.136);
     backdrop-filter: blur(15px);
@@ -609,12 +663,32 @@ p {
     padding: 40px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.4);
-    max-width: 800px;
-    width: 100%;
-    margin: 50px auto;
+    flex: 1;
     position: relative;
     z-index: 10;
     animation: fadeIn 0.6s ease-out;
+}
+
+#user-panel {
+    background: rgba(255, 255, 255, 0.136);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: 250px;
+    height: fit-content;
+    position: relative;
+    z-index: 10;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 #lista-preguntas, #crear-pregunta {
@@ -646,7 +720,6 @@ p {
     box-shadow: 0 10px 25px rgba(175, 175, 175, 0.15);
 }
 
-/* Estilos para elementos dinámicos del admin */
 .container {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
@@ -654,9 +727,10 @@ p {
     padding: 20px;
     margin: 20px 0;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1;
 }
 
-/* Estilos para formularios en admin */
 input, textarea, select {
     width: 100%;
     padding: 12px 15px;
@@ -682,7 +756,6 @@ input::placeholder, textarea::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* Botones específicos del admin */
 .btn-admin {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
@@ -723,4 +796,186 @@ input::placeholder, textarea::placeholder {
 .btn-admin.success:hover {
     background: rgba(46, 204, 113, 0.3);
     border-color: rgba(46, 204, 113, 0.6);
+}
+
+.vista-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.vista-header h2 {
+    text-align: center;
+    flex: 1;
+}
+
+.vista-header.centered {
+    justify-content: center;
+}
+
+.vista-header.centered h2 {
+    flex: none;
+}
+
+.btn-volver {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Onest', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+.preguntas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.pregunta-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.pregunta-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.pregunta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.pregunta-header h3 {
+    color: #ffffff;
+    font-family: 'Onest', sans-serif;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.pregunta-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.pregunta-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.bandera-container {
+    flex-shrink: 0;
+}
+
+.bandera-imagen {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.respostes-list {
+    flex: 1;
+}
+
+.respostes-list h4 {
+    color: #ffffff;
+    font-family: 'Onest', sans-serif;
+    font-size: 1rem;
+    margin: 0 0 10px 0;
+}
+
+.respostes-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.respostes-list li {
+    color: rgba(255, 255, 255, 0.8);
+    font-family: 'Onest', sans-serif;
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.respostes-list li.correcta {
+    color: #4CAF50;
+    font-weight: 600;
+}
+
+.respostes-list li i {
+    font-size: 12px;
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    font-family: 'Onest', sans-serif;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.form-group small {
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Onest', sans-serif;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.form-actions .btn-admin {
+    padding: 15px 30px;
+    font-size: 16px;
+    min-width: 200px;
 }

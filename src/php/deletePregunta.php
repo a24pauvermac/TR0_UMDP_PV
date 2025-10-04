@@ -7,7 +7,6 @@ $input = json_decode($inputJSON, TRUE);
 $idPregunta = $input['idPregunta'] ?? '';
 
 if ($idPregunta) {
-    // Primer obtenim el idRespuestaCorrecta per eliminar també el país
     $sql = "SELECT idRespuestaCorrecta FROM questions WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('i', $idPregunta);
@@ -17,14 +16,12 @@ if ($idPregunta) {
     if ($row = $result->fetch_assoc()) {
         $idPais = $row['idRespuestaCorrecta'];
         
-        // Eliminem la pregunta
         $sqlDelete = "DELETE FROM questions WHERE id = ?";
         $stmtDelete = $conn->prepare($sqlDelete);
         $stmtDelete->bind_param('i', $idPregunta);
         $stmtDelete->execute();
         $stmtDelete->close();
         
-        // Eliminem el país associat
         $sqlDeletePais = "DELETE FROM paises WHERE id = ?";
         $stmtDeletePais = $conn->prepare($sqlDeletePais);
         $stmtDeletePais->bind_param('i', $idPais);

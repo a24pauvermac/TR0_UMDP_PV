@@ -95,8 +95,29 @@ docker-compose up --build
 - **Servidor web**: Nginx
 - **Contenidor**: Docker & Docker Compose
 
+## Seguretat
+
+**IMPORTANT**: Abans d'usar en producció:
+
+1. **Copia `config/env.example` a `config/.env`**:
+   ```bash
+   cp config/env.example config/.env
+   ```
+
+2. **Modifica les credencials** en `config/.env`:
+   ```bash
+   MYSQL_ROOT_PASSWORD=tu_password_segur_aqui
+   MYSQL_PASSWORD=tu_password_usuario_segur_aqui
+   ```
+
+3. **Els arxius sensibles estan protegits** per `.gitignore`:
+   - `config/.env` (credencials reals)
+   - `config/conexio.php` (connexió real)
+   - `config/docker-compose.local.yml` (configuració local)
+
 ## Notes
 
 - Les imatges locals es guarden a `assets/uploads/banderas/`
 - Les imatges externes es carreguen directament des de URLs
 - La configuració de la base de dades és automàtica (Docker vs Local)
+- **Les credencials per defecte són només per desenvolupament**

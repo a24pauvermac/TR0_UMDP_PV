@@ -12,7 +12,6 @@ $sql = "
     LIMIT $num
 ";
 
-
 $result = $conn->query($sql);
 if (!$result) {
     die(json_encode(['error' => 'Error a la consulta: ' . $conn->error]));
@@ -38,14 +37,9 @@ foreach ($preguntes_seleccionades as $pregunta) {
     $respostes = [];
 
     while ($row = $resResult->fetch_assoc()) {
-        // Si és una URL local (només el nom del fitxer), mantenir-lo
-        // Si és una URL externa (http/https), mantenir-la com està
-        // Les URLs locals ja són només el nom del fitxer
         $respostes[] = $row;
     }
 
-    // Si és una URL local (només el nom del fitxer), mantenir-lo
-    // Si és una URL externa (http/https), mantenir-la com està
     $nomFitxer = $pregunta['image'];
     
     $respostes[] = [
@@ -60,8 +54,6 @@ foreach ($preguntes_seleccionades as $pregunta) {
         'respostes' => $respostes
     ];
 }
-
-// Variables de sessió eliminades - no es necessiten
 
 echo json_encode(['preguntes' => $pregSenseIndex]);
 

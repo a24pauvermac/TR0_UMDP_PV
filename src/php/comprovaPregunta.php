@@ -13,7 +13,6 @@ if (isset($preguntes[$pregunta_actual])) {
 
     $idCorrecte = $pregunta['idCorrecte'];
 
-    // Obtener el ID del país seleccionado por el usuario
     $resposta_seleccionada = $pregunta['respostes'][$resposta_usuari];
     $id_seleccionat = $resposta_seleccionada['id'];
     $correcte = ($id_seleccionat == $idCorrecte);
