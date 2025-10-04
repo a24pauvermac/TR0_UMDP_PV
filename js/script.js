@@ -46,7 +46,7 @@ function esborrarNom() {
 }
 
 function iniciarJoc() {
-    fetch('getPreguntas.php?num=10')
+    fetch('php/getPreguntas.php?num=10')
         .then(response => response.json())
         .then(data => {
             console.log('Dades rebudes:', data)
@@ -89,7 +89,7 @@ function mostrarPregunta(pregunta, indice) {
         if (respostaCorrecta.url.startsWith('http')) {
             htmlString += `<img src="${respostaCorrecta.url}" alt="Bandera">`;   
         } else {
-            htmlString += `<img src="servir_imatge.php?fitxer=${respostaCorrecta.url}" alt="Bandera">`;   
+            htmlString += `<img src="php/servir_imatge.php?fitxer=${respostaCorrecta.url}" alt="Bandera">`;   
         }
     }
     htmlString += `<h3>A quin país pertany aquesta bandera?</h3>`;
