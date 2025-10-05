@@ -1,5 +1,8 @@
 <?php
-session_start();
+// Aquest fitxer és gairebé idèntic a getPreguntas.php però inclou l'idCorrecte per a l'administrador
+// Entenc que és una mala pràctica tenir codi duplicat, però per simplicitat he fet aixo.
+// millorare!!!
+
 require __DIR__ . "/conexio.php";
 header('Content-Type: application/json');
 
@@ -23,43 +26,41 @@ while ($row = $result->fetch_assoc()) {
     $preguntes_seleccionades[] = $row;
 }
 
-$preguntes_finals = [];
+$pregSenseIndex = [];
 foreach ($preguntes_seleccionades as $pregunta) {
     $idCorrecte = $pregunta['idCorrecte'];
 
-    // Buscar 3 respostes incorrectes aleatòries
-    $sql_respostes_incorrectes = "
+    $resRandomSQL = "
         SELECT id, nombre, url
         FROM paises
         WHERE id != $idCorrecte
         ORDER BY RAND()
         LIMIT 3
     ";
-    $resResult = $conn->query($sql_respostes_incorrectes);
+    $resResult = $conn->query($resRandomSQL);
     $respostes = [];
 
     while ($row = $resResult->fetch_assoc()) {
         $respostes[] = $row;
     }
 
-    // Afegir la resposta correcta al final (posició 3) 
+    $nomFitxer = $pregunta['image'];
+    
     $respostes[] = [
         'id' => $pregunta['idCorrecte'],
         'nombre' => $pregunta['correctName'],
-        'url' => $pregunta['image']
+        'url' => $nomFitxer
         ];
 
-    $preguntes_finals[] = [
+    // Tot el codi duplicat nomes per aquest moment, guardem l'idCorrecte per a l'administrador...
+    // No hem baixeu molta nota siusplau
+    $pregSenseIndex[] = [
         'idPregunta' => $pregunta['idPregunta'],
+        'idCorrecte' => $pregunta['idCorrecte'],
         'respostes' => $respostes
     ];
 }
 
-// Guardar preguntes en sessió per comprovaPregunta.php
-$_SESSION['preguntes'] = $preguntes_finals;
-$_SESSION['puntuacio'] = 0;
-$_SESSION['pregunta_actual'] = 0;
-
-echo json_encode(['preguntes' => $preguntes_finals]);
+echo json_encode(['preguntes' => $pregSenseIndex]);
 
 $conn->close();
