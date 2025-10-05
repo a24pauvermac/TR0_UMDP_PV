@@ -6,12 +6,22 @@
 // si estan fora de la carpeta pública del servidor web
 
 $nomFitxer = $_GET['fitxer'];
+
+// Validar que el nom del fitxer sigui segur (només lletres, números, guions i punts)
+if (!preg_match('/^[a-zA-Z0-9._-]+$/', $nomFitxer)) {
+    http_response_code(400);
+    echo "Nom de fitxer no vàlid";
+    exit;
+}
+
 $rutaImatge = __DIR__ . '/../../assets/uploads/banderas/' . $nomFitxer;
 
-if (file_exists($rutaImatge)) {
+// Verificar que el fitxer existeix i està dins de la carpeta correcta
+if (file_exists($rutaImatge) && strpos(realpath($rutaImatge), realpath(__DIR__ . '/../../assets/uploads/banderas/')) === 0) {
     header('Content-Type: image/jpeg');
     readfile($rutaImatge);
 } else {
+    http_response_code(404);
     echo "Imatge no trobada";
 }
 ?>
