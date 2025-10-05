@@ -66,3 +66,12 @@ TR0_UMDP_PV/
 
 ## ODS
 La meva aplicació de qüestionaris s’alinea amb l’ODS 4 perquè facilita estudiar de manera fàcil i accessible. Permet aprendre des de qualsevol dispositiu, manté una navegació simple sense obstacles tècnics i mostra resultats clars per continuar millorant. Així, aconseguim un aprenentatge senzill i agradable per a tothom, que és just el que promou l’educació de qualitat. A més a més, l’aplicació també té l’objectiu d’entretenir les persones usuàries, creant una sensació de joc alhora que s’aprèn.
+
+## Links
+Prod : http://a24pauvermac.daw.inspedralbes.cat/TR0_UMDP_PV/landing.html
+
+Github: https://github.com/a24pauvermac/TR0_UMDP_PV
+
+youtube: https://www.youtube.com/watch?v=cs5WaWfCutA
+
+Vercel: https://tro-paulavera.vercel.app/landing.html 
