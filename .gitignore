@@ -1,5 +1,5 @@
 # Archivos de configuración sensibles
-config/conexio.php
+php/conexio.php
 config/.env
 config/env.local
 config/docker-compose.local.yml
