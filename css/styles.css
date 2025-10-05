@@ -388,7 +388,6 @@ img:hover {
     box-shadow: 0 10px 25px rgba(175, 175, 175, 0.15);
 }
 
-
 .hidden {
     display: none;
 }
@@ -718,16 +717,6 @@ p {
     box-shadow: 0 10px 25px rgba(175, 175, 175, 0.15);
 }
 
-.container {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding: 20px;
-    margin: 20px 0;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative;
-    z-index: 1;
-}
 
 input, textarea, select {
     width: 100%;
@@ -818,26 +807,6 @@ input::placeholder, textarea::placeholder {
     flex: none;
 }
 
-.btn-volver {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: 'Onest', sans-serif;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-volver:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-1px);
-}
 
 .preguntas-grid {
     display: grid;
@@ -1030,4 +999,21 @@ input::placeholder, textarea::placeholder {
     border-color: rgba(255, 255, 255, 0.4);
     transform: translateY(-2px);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.resultado-pregunta {
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.resultado-pregunta h3 {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.resultado-pregunta p {
+    color: white;
+    font-size: 1rem;
 }
